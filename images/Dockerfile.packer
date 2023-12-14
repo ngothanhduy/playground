@@ -1,0 +1,13 @@
+FROM alpine:3.19
+
+ENV PACKER_VERSION 1.10.0
+
+RUN apk update --no-cache && \
+    apk add --no-cache bash curl git jq make ansible
+
+RUN apk add --no-cache unzip && \
+    curl -sSL -o packer.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip && \
+    unzip packer.zip -d /usr/local/bin/ && \
+    chmod +x /usr/local/bin/packer && \
+    rm -f packer.zip && \
+    apk del unzip
